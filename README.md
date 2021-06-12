@@ -1,6 +1,6 @@
-# Not Hotdog powered by Akida One Shot Learning
+# Not Hotdog powered by Akida One-Shot Learning
 
-A classy example of using Akida's One Shot Learning to determine if the object is a hot dog or not a hot dog.
+A classy example of using Akida's One-Shot Learning to determine if the object is a hotdog or not a hotdog.
 
 ## Setting up the Akida development evironment
 
@@ -12,8 +12,8 @@ A classy example of using Akida's One Shot Learning to determine if the object i
 
 ## Running and using the example
 
-1. `python3 akida_camera.py`
-2. Point webcam at object to determine if its a hot dog
+1. `python3 akida_not_hotdog.py`
+2. Point webcam at object to determine if it is a hotdog or not a hotdog
 
 ### Read More
 
