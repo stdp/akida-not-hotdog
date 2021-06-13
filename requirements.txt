@@ -4,3 +4,4 @@ cnn2snn
 akida-models
 pillow
 matplotlib
+pynput

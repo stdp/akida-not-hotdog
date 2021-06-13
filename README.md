@@ -2,6 +2,8 @@
 
 A classy example of using Akida's One-Shot Learning to determine if the object is a hotdog or not a hotdog.
 
+This is an extremely loose example that takes only two images. One hotdog and one not hotdog. There is a training dataset out there specifically for the not hotdog app but I just wanted to experiment with a single image of a hotdog.
+
 ## Setting up the Akida development evironment
 
 1. Go to `https://www.anaconda.com/download/` and download intaller
@@ -13,7 +15,14 @@ A classy example of using Akida's One-Shot Learning to determine if the object i
 ## Running and using the example
 
 1. `python3 akida_not_hotdog.py`
-2. Point webcam at object to determine if it is a hotdog or not a hotdog
+2. Point webcam at object and press `space` to determine if it is a hotdog or not a hotdog
+
+
+## As seen in the hilarious TV Show `Silicon Valley`
+
+The concept is taken from the TV show
+
+[![Not Hotdog](http://img.youtube.com/vi/pqTntG1RXSY/0.jpg)](https://youtu.be/pqTntG1RXSY "Not Hotdog")
 
 ### Read More
 
