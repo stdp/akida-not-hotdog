@@ -6,7 +6,7 @@ This is an extremely loose example that takes only two images. One hotdog and on
 
 ## Setting up the Akida development evironment
 
-1. Go to `https://www.anaconda.com/download/` and download intaller
+1. Go to `https://www.anaconda.com/download/` and download installer
 2. Install anaconda `bash Anaconda-latest-Linux-x86_64.sh`
 3. Create conda environment `conda create --name akida_env python=3.6`
 4. Activate conda environement `conda activate akida_env`
