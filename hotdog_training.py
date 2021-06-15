@@ -31,9 +31,7 @@ model_ak.compile(
 )
 
 # learn hotdog
-image = load_img(
-    HOTDOG, target_size=(TARGET_WIDTH, TARGET_HEIGHT), color_mode="rgb"
-)
+image = load_img(HOTDOG, target_size=(TARGET_WIDTH, TARGET_HEIGHT), color_mode="rgb")
 hotdog_array = img_to_array(image)
 hotdog_array = np.array([hotdog_array], dtype="uint8")
 model_ak.fit(hotdog_array, HOTDOG_NEURON)

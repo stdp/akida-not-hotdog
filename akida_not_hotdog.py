@@ -10,6 +10,7 @@ from pynput import keyboard
 
 HOTDOG_FBZ = "models/hotdog.fbz"
 HOTDOG_NEURON = 1
+NOTHOTDOG_NEURON = 9
 
 CAMERA_SRC = 0
 NUM_CLASSES = 10
@@ -19,24 +20,37 @@ FRAME_WIDTH = 640
 FRAME_HEIGHT = 480
 
 TEXT_COLOUR = (255, 255, 255)
+TEXT_DISPLAY_TIME = 4
 
 HOTDOG_LABEL = "HOTDOG"
 NOTHOTDOG_LABEL = "NOT HOTDOG"
 
+HOTDOG_KEY = "y"
+NOTHOTDOG_KEY = "n"
+
 
 class Controls:
-
     def __init__(self, inference):
         self.listener = keyboard.Listener(
-            on_press=self.on_press,
-            on_release=self.on_release)
+            on_press=self.on_press, on_release=self.on_release
+        )
         self.listener.start()
         self.inference = inference
 
     def on_press(self, key):
         try:
+
             if key == keyboard.Key.space:
                 self.inference.infer()
+
+            if key.char == HOTDOG_KEY:
+                self.inference.learn(HOTDOG_NEURON)
+                self.inference.save()
+
+            if key.char == NOTHOTDOG_KEY:
+                self.inference.learn(NOTHOTDOG_NEURON)
+                self.inference.save()
+
         except AttributeError:
             pass
 
@@ -49,6 +63,7 @@ class Camera:
     def __init__(self):
         self.stream = VideoStream(src=CAMERA_SRC).start()
         self.label = ""
+        self.text_display_timer = 0
 
     def get_input_array(self):
         frame = cv2.resize(self.stream.read(), (TARGET_WIDTH, TARGET_HEIGHT))
@@ -61,6 +76,7 @@ class Camera:
         frame = self.label_frame(frame)
         cv2.imshow("Akida Not Hotdog", frame)
         key = cv2.waitKey(1) & 0xFF
+        self.check_timer()
 
     def label_frame(self, frame):
         frame = cv2.putText(
@@ -77,6 +93,15 @@ class Camera:
 
     def set_label(self, label):
         self.label = label
+        self.start_timer()
+
+    def start_timer(self):
+        self.text_display_timer = time.time()
+
+    def check_timer(self):
+        if time.time() - self.text_display_timer > TEXT_DISPLAY_TIME:
+            self.label = ""
+            self.text_display_timer = 0
 
 
 class Inference:
@@ -94,6 +119,17 @@ class Inference:
         else:
             print(NOTHOTDOG_LABEL)
             self.camera.set_label(NOTHOTDOG_LABEL)
+
+    def learn(self, neuron):
+        input_array = self.camera.get_input_array()
+        self.hotdog_model.fit(input_array, neuron)
+        if neuron == 1:
+            self.camera.set_label("LEARNED HOTDOG")
+        else:
+            self.camera.set_label("LEARNED NOT HOTDOG")
+
+    def save(self):
+        self.hotdog_model.save(HOTDOG_FBZ)
 
 
 camera = Camera()
