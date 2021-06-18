@@ -9,8 +9,8 @@ from pynput import keyboard
 
 
 HOTDOG_FBZ = "models/hotdog.fbz"
-HOTDOG_NEURON = 1
-NOTHOTDOG_NEURON = 9
+HOTDOG_CLASS = 1
+NOTHOTDOG_CLASS = 9
 
 CAMERA_SRC = 0
 NUM_CLASSES = 10
@@ -44,11 +44,11 @@ class Controls:
                 self.inference.infer()
 
             if key.char == HOTDOG_KEY:
-                self.inference.learn(HOTDOG_NEURON)
+                self.inference.learn(HOTDOG_CLASS)
                 self.inference.save()
 
             if key.char == NOTHOTDOG_KEY:
-                self.inference.learn(NOTHOTDOG_NEURON)
+                self.inference.learn(NOTHOTDOG_CLASS)
                 self.inference.save()
 
         except AttributeError:
@@ -113,7 +113,7 @@ class Inference:
     def infer(self):
         i = self.camera.get_input_array()
         p = self.hotdog_model.predict(i, num_classes=NUM_CLASSES)
-        if p[0] == HOTDOG_NEURON:
+        if p[0] == HOTDOG_CLASS:
             print(HOTDOG_LABEL)
             self.camera.set_label(HOTDOG_LABEL)
         else:
